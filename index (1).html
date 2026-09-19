@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#F6F9FE">
+<title>Anis Spoken English Lab — বাক্য সাজাও</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light;
+  --bg:#F6F9FE; --card:#FFFFFF; --ink:#15264F; --ink2:#5B6B8C; --ink3:#93A0BB;
+  --line:#DCE4F2; --line2:#C7D3E8;
+  --blue:#1F6FEB; --blue-d:#1656BC; --blue-bg:#E4EEFF;
+  --orange:#F5741F; --orange-d:#C95A12; --orange-bg:#FFEBDA;
+  --green:#58CC02; --green-d:#46A302; --green-bg:#DFF7C4; --green-ink:#3B8500;
+  --red:#FF4B4B; --red-d:#D93A3A; --red-bg:#FFDFE0; --red-ink:#C42B2B;
+  --gold:#FFC800; --gold-d:#E0A800; --gold-bg:#FFF4CC;
+  --bn:'Hind Siliguri','Noto Sans Bengali','Kalpurush','Nirmala UI',sans-serif;
+  --en:'Nunito','Segoe UI',system-ui,-apple-system,Roboto,sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--bn);}
+body{min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0}
+button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.en{font-family:var(--en)}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-family:var(--bn);font-weight:700;font-size:1.05rem;
+  padding:14px 26px;border-radius:16px;min-height:52px;
+  border:2px solid var(--line2);border-bottom-width:4px;background:#fff;color:var(--blue);
+  transition:transform .08s,border-bottom-width .08s,margin-top .08s;
+}
+.btn:active{transform:translateY(2px);border-bottom-width:2px}
+.btn.primary{background:var(--green);border-color:var(--green-d);color:#fff}
+.btn.blue{background:var(--blue);border-color:var(--blue-d);color:#fff}
+.btn.danger{background:var(--red);border-color:var(--red-d);color:#fff}
+.btn.block{width:100%}
+.btn[disabled]{background:#E7ECF5;border-color:#D3DBEA;color:#A2AEC6;cursor:not-allowed;transform:none}
+
+/* ---------- top bar (home) ---------- */
+.top{
+  position:sticky;top:0;z-index:20;background:rgba(246,249,254,.94);backdrop-filter:blur(8px);
+  border-bottom:2px solid var(--line);
+}
+.top-in{max-width:720px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+.brand svg{width:40px;height:40px;flex:none}
+.brand b{display:block;font-family:var(--en);font-weight:900;font-size:1.02rem;line-height:1.05;color:var(--ink);white-space:nowrap}
+.brand b i{font-style:normal;color:var(--blue)}
+.brand b u{text-decoration:none;color:var(--orange)}
+.brand small{display:block;font-family:var(--en);font-size:.68rem;color:var(--ink2);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stats{display:flex;gap:6px;flex:none}
+.chip{
+  display:flex;align-items:center;gap:5px;padding:6px 10px;border-radius:12px;
+  font-family:var(--en);font-weight:900;font-size:.95rem;background:#fff;border:2px solid var(--line);
+}
+.chip.fire{color:var(--orange)} .chip.xp{color:var(--gold-d)} .chip.done{color:var(--blue)}
+
+/* ---------- hero ---------- */
+.hero{max-width:720px;margin:0 auto;padding:22px 16px 6px;display:flex;gap:16px;align-items:center}
+.hero .mascot{width:92px;height:92px;flex:none}
+.hero h1{margin:0 0 6px;font-size:1.55rem;line-height:1.25;font-weight:700}
+.hero p{margin:0;color:var(--ink2);font-size:1rem;line-height:1.6}
+.overall{max-width:720px;margin:14px auto 0;padding:0 16px}
+.bar{height:14px;background:#E3EAF6;border-radius:99px;overflow:hidden;position:relative}
+.bar>i{display:block;height:100%;background:var(--green);border-radius:99px;transition:width .4s ease;position:relative}
+.bar>i::after{content:"";position:absolute;left:8px;right:8px;top:3px;height:4px;background:rgba(255,255,255,.4);border-radius:4px}
+.overall small{display:block;margin-top:6px;color:var(--ink2);font-size:.85rem}
+
+/* ---------- path ---------- */
+.path{max-width:720px;margin:0 auto;padding:10px 16px 90px;display:flex;flex-direction:column;align-items:center}
+.unit{
+  width:100%;margin:26px 0 22px;padding:14px 18px;border-radius:18px;color:#fff;
+  border-bottom:5px solid rgba(0,0,0,.18);display:flex;justify-content:space-between;align-items:center;gap:12px;
+}
+.unit b{display:block;font-size:1.12rem;font-weight:700}
+.unit span{font-size:.9rem;opacity:.92}
+.unit em{font-style:normal;font-family:var(--en);font-weight:900;font-size:.95rem;background:rgba(255,255,255,.22);padding:6px 12px;border-radius:12px;white-space:nowrap}
+.u0{background:var(--blue)} .u1{background:var(--orange)} .u2{background:#7C5CF0} .u3{background:#12A594} .u4{background:#E5488B}
+.node-wrap{display:flex;flex-direction:column;align-items:center;margin:10px 0;position:relative}
+.node{
+  width:76px;height:70px;border-radius:50%/48%;background:var(--blue);color:#fff;
+  border:0;border-bottom:8px solid var(--blue-d);font-family:var(--en);font-weight:900;font-size:1.5rem;
+  display:flex;align-items:center;justify-content:center;transition:transform .08s;
+}
+.node:active{transform:translateY(5px);border-bottom-width:3px}
+.node.done{background:var(--gold);border-bottom-color:var(--gold-d);color:#fff}
+.node.cur{background:var(--green);border-bottom-color:var(--green-d)}
+.node.cur::before{content:"";position:absolute;inset:-9px -9px 1px;border:5px solid var(--green-bg);border-radius:50%/48%;pointer-events:none}
+.node svg{width:34px;height:34px}
+.node-label{margin-top:8px;font-size:.86rem;font-weight:600;color:var(--ink2);text-align:center;max-width:150px;line-height:1.25}
+.node-label.en{font-family:var(--en);font-weight:800}
+.stars{display:flex;gap:2px;margin-top:2px}
+.stars svg{width:14px;height:14px}
+.start-tip{
+  position:absolute;top:-38px;background:#fff;color:var(--green-ink);font-weight:700;padding:6px 14px;border-radius:12px;
+  border:2px solid var(--line);font-size:.92rem;white-space:nowrap;animation:bob 1.4s ease-in-out infinite;
+}
+.start-tip::after{content:"";position:absolute;left:50%;bottom:-8px;width:12px;height:12px;background:#fff;border-right:2px solid var(--line);border-bottom:2px solid var(--line);transform:translateX(-50%) rotate(45deg)}
+@keyframes bob{50%{transform:translateY(-5px)}}
+.foot{max-width:720px;margin:0 auto;padding:0 16px 40px;text-align:center;color:var(--ink3);font-size:.85rem}
+.foot button{color:var(--ink2);text-decoration:underline;font-size:.85rem;margin-top:8px}
+
+/* ---------- sheets / modals ---------- */
+.backdrop{position:fixed;inset:0;background:rgba(21,38,79,.42);z-index:60;display:none;align-items:flex-end;justify-content:center}
+.backdrop.open{display:flex}
+.sheet{
+  width:100%;max-width:560px;background:#fff;border-radius:26px 26px 0 0;padding:22px 20px calc(22px + env(safe-area-inset-bottom));
+  animation:up .22s ease-out;max-height:90vh;overflow:auto;
+}
+@keyframes up{from{transform:translateY(40px);opacity:.4}}
+.tag{display:inline-block;font-family:var(--en);font-weight:900;color:#fff;background:var(--blue);padding:4px 12px;border-radius:99px;font-size:.9rem}
+.sheet h2{margin:12px 0 8px;font-size:1.25rem;line-height:1.5;font-weight:600}
+.structure{
+  margin:12px 0 16px;padding:12px 14px;border-radius:14px;background:var(--blue-bg);border:2px solid #C5D9FA;
+  font-family:var(--en);font-weight:800;color:var(--blue-d);font-size:1rem;line-height:1.55;word-break:break-word
+}
+.sheet .row{display:flex;flex-direction:column;gap:10px}
+.meta{color:var(--ink2);font-size:.95rem;margin-bottom:14px}
+.center{text-align:center}
+@media(min-width:600px){.backdrop{align-items:center}.sheet{border-radius:26px}}
+
+/* ---------- lesson ---------- */
+#lesson{position:fixed;inset:0;z-index:40;background:#fff;display:none;flex-direction:column}
+#lesson.open{display:flex}
+.l-top{max-width:700px;width:100%;margin:0 auto;padding:14px 16px 6px;display:flex;align-items:center;gap:14px}
+.x{width:36px;height:36px;border-radius:10px;color:var(--ink3);font-size:1.7rem;line-height:1;display:flex;align-items:center;justify-content:center}
+.x:hover{background:#F0F4FB}
+.l-top .bar{flex:1}
+.hearts{display:flex;align-items:center;gap:5px;font-family:var(--en);font-weight:900;color:var(--red);font-size:1.1rem}
+.hearts svg{width:26px;height:26px}
+.hint-btn{width:36px;height:36px;border-radius:10px;font-size:1.25rem;display:flex;align-items:center;justify-content:center;background:var(--gold-bg);border:2px solid #F3DE8B}
+.l-main{flex:1;overflow:auto;padding:8px 16px 24px}
+.l-in{max-width:620px;margin:0 auto}
+.l-in h3{margin:14px 0 14px;font-size:1.45rem;font-weight:700}
+.say{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.say .mascot{width:86px;height:86px;flex:none}
+.bubble{
+  position:relative;flex:1;border:2px solid var(--line);border-radius:18px;padding:14px 16px;font-size:1.28rem;line-height:1.55;font-weight:500;background:#fff
+}
+.bubble::before{content:"";position:absolute;left:-9px;top:50%;width:14px;height:14px;background:#fff;border-left:2px solid var(--line);border-bottom:2px solid var(--line);transform:translateY(-50%) rotate(45deg)}
+.answer{
+  min-height:132px;padding:6px 0;display:flex;flex-wrap:wrap;gap:8px 8px;align-content:flex-start;position:relative;
+  background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 55px,var(--line) 55px,var(--line) 57px);
+  border-top:2px solid var(--line);
+}
+.answer.ok .tile,.answer.bad .tile{pointer-events:none}
+.bank{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 8px;margin-top:22px}
+.tile{
+  font-family:var(--en);font-weight:800;font-size:1.12rem;color:var(--ink);
+  padding:9px 14px;border-radius:14px;background:#fff;border:2px solid var(--line2);border-bottom-width:4px;
+  min-height:46px;transition:transform .08s,border-bottom-width .08s;
+}
+.tile:active{transform:translateY(2px);border-bottom-width:2px}
+.tile.ghost{background:#EEF2F9;border-color:#EEF2F9;color:transparent;pointer-events:none;box-shadow:none}
+.answer .tile{animation:pop .12s ease-out}
+@keyframes pop{from{transform:scale(.9)}}
+.end-mark{font-family:var(--en);font-weight:800;font-size:1.12rem;padding:9px 0 9px 0;color:var(--ink2);align-self:flex-start}
+
+.l-bottom{border-top:2px solid var(--line);background:#fff;padding:14px 16px calc(14px + env(safe-area-inset-bottom))}
+.l-bottom.ok{background:var(--green-bg);border-color:var(--green-bg)}
+.l-bottom.bad{background:var(--red-bg);border-color:var(--red-bg)}
+.l-bot-in{max-width:620px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.fb{flex:1;min-width:200px}
+.fb b{display:flex;align-items:center;gap:8px;font-size:1.3rem;font-weight:700}
+.l-bottom.ok .fb b{color:var(--green-ink)} .l-bottom.bad .fb b{color:var(--red-ink)}
+.fb p{margin:4px 0 0;font-family:var(--en);font-weight:800;font-size:1.05rem;color:var(--red-ink);line-height:1.45}
+.fb p small{display:block;font-family:var(--bn);font-weight:600;font-size:.85rem;color:var(--red-ink);opacity:.85}
+.l-bottom.ok .fb p{color:var(--green-ink)}
+.spk{width:40px;height:40px;border-radius:12px;background:#fff;display:inline-flex;align-items:center;justify-content:center;border:2px solid rgba(0,0,0,.08);flex:none}
+.spk svg{width:22px;height:22px}
+.l-bot-in .btn{min-width:150px}
+.l-bot-in .btn.solo{width:100%}
+.l-bottom.ok .btn{background:var(--green);border-color:var(--green-d)}
+.l-bottom.bad .btn{background:var(--red);border-color:var(--red-d);color:#fff}
+@media(max-width:520px){.l-bot-in .btn{width:100%}}
+
+/* ---------- result screens ---------- */
+.result{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px 20px;gap:12px;overflow:auto}
+.result .mascot{width:140px;height:140px}
+.result h2{margin:6px 0 0;font-size:1.9rem;font-weight:700}
+.result p{margin:0;color:var(--ink2);font-size:1.05rem}
+.big-stars{display:flex;gap:8px;margin:4px 0}
+.big-stars svg{width:54px;height:54px}
+.big-stars svg:nth-child(2){transform:translateY(-10px)}
+.tiles3{display:flex;gap:10px;margin:8px 0 6px;flex-wrap:wrap;justify-content:center}
+.stat{min-width:104px;border-radius:16px;border:2px solid;overflow:hidden;background:#fff}
+.stat i{display:block;font-style:normal;padding:4px 8px;font-weight:700;font-size:.8rem;color:#fff}
+.stat span{display:block;padding:10px 8px;font-family:var(--en);font-weight:900;font-size:1.35rem}
+.stat.a{border-color:var(--gold)} .stat.a i{background:var(--gold)} .stat.a span{color:var(--gold-d)}
+.stat.b{border-color:var(--green)} .stat.b i{background:var(--green)} .stat.b span{color:var(--green-ink)}
+.stat.c{border-color:var(--blue)} .stat.c i{background:var(--blue)} .stat.c span{color:var(--blue)}
+.result .acts{width:100%;max-width:420px;display:flex;flex-direction:column;gap:10px;margin-top:10px}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="mascot" viewBox="0 0 80 80">
+      <path d="M6 34 L40 24 L74 34 L74 64 L40 56 L6 64Z" fill="#1F6FEB"/>
+      <path d="M6 64 L40 56 L74 64 L74 68 L40 60 L6 68Z" fill="#1656BC"/>
+      <path d="M11 36 L38 29 L38 54 L11 60Z" fill="#fff"/>
+      <path d="M69 36 L42 29 L42 54 L69 60Z" fill="#fff"/>
+      <circle cx="26" cy="42" r="3.4" fill="#15264F"/><circle cx="54" cy="42" r="3.4" fill="#15264F"/>
+      <circle cx="21" cy="49" r="3" fill="#FFC1A6" opacity=".8"/><circle cx="59" cy="49" r="3" fill="#FFC1A6" opacity=".8"/>
+      <path d="M33 47 Q40 54 47 47" stroke="#15264F" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <path d="M40 5 L64 15 L40 25 L16 15Z" fill="#15264F"/>
+      <path d="M27 20 V27 Q40 33 53 27 V20 L40 25Z" fill="#15264F"/>
+      <path d="M64 15 V27" stroke="#F5741F" stroke-width="2.4" stroke-linecap="round"/><circle cx="64" cy="29" r="3" fill="#F5741F"/>
+    </symbol>
+    <symbol id="star" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3 6.1 20.6l1.3-6.6L2.5 9.4l6.6-.8z" fill="currentColor"/></symbol>
+    <symbol id="heart" viewBox="0 0 24 24"><path d="M12 21s-8-5.3-8-11.2C4 6.6 6.3 4.5 8.9 4.5c1.4 0 2.7.7 3.1 1.9.4-1.2 1.7-1.9 3.1-1.9C17.7 4.5 20 6.6 20 9.8 20 15.700 12 21 12 21z" fill="currentColor"/></symbol>
+    <symbol id="spk" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="#1F6FEB"/><path d="M16 8.5c1.6 1.6 1.6 5.4 0 7M18.6 6c3 3 3 9 0 12" stroke="#1F6FEB" stroke-width="2" fill="none" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand">
+      <svg viewBox="0 0 80 80" aria-hidden="true"><use href="#mascot"/></svg>
+      <div>
+        <b><i>Anis</i> Spoken <u>English</u> Lab</b>
+        <small>Speak English, Build Your Future</small>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="chip fire" title="টানা দিন">🔥 <span id="stStreak">0</span></div>
+      <div class="chip xp" title="XP">⚡ <span id="stXp">0</span></div>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <svg class="mascot" viewBox="0 0 80 80" aria-hidden="true"><use href="#mascot"/></svg>
+  <div>
+    <h1>বাক্য সাজাও, ইংরেজি শেখো</h1>
+    <p>বাংলা বাক্য দেখে ইংরেজি শব্দগুলো সঠিক ক্রমে সাজাও। <span id="ruleCount">৫৫</span>টি নিয়ম, প্রতিটিতে ছোট একটি লেসন।</p>
+  </div>
+</section>
+<div class="overall">
+  <div class="bar"><i id="overallBar" style="width:0%"></i></div>
+  <small id="overallTxt"></small>
+</div>
+
+<main class="path" id="path"></main>
+
+<div class="foot">
+  <div>Anis Spoken English Lab — Practice Makes Perfect</div>
+  <button id="resetBtn">অগ্রগতি মুছে নতুন করে শুরু করো</button>
+</div>
+
+<!-- rule / intro sheet -->
+<div class="backdrop" id="sheetBd">
+  <div class="sheet" role="dialog" aria-modal="true" id="sheet"></div>
+</div>
+
+<!-- lesson -->
+<div id="lesson" aria-live="polite"></div>
+
+<script>
+/* ================= DATA ================= */
+const RULES = [{"n":1,"rule":"বাংলা বাক্যে ক্রিয়া উল্লেখ না থাকলে Subject এর পরে am/is/are বসে।","structure":"Subject + am/is/are + object + ext.","s":[["আকাশ নীল।","The sky is blue."],["আমি একজন ছাত্র।","I am a student."],["তারা খুব গরীব।","They are very poor."],["তার বাবা একজন শিক্ষক।","His father is a teacher."],["পৃথিবী গোলাকার।","The earth is round."],["আমি একজন ডাক্তার।","I am a doctor."],["তারা ধনী নয়।","They are not rich."],["সে খুবই মেধাবী।","He is very brilliant."],["আমি ক্লান্ত।","I am tired."]]},{"n":2,"rule":"বাংলা বাক্যে কারো কাছে কোন কিছু আছে বুঝালে Subject এর পরে have/has বসে।","structure":"Subject + have/has + object + ext.","s":[["আমার একটি লাল টুপি আছে।","I have a red cap."],["তার একটি পোষা বিড়াল আছে।","He has a pet cat."],["তাদের অনেক জমি আছে।","They have a lot of land."],["আমাদের একটি ছোট ক্লাব আছে।","We have a little club."],["আমার একটি বাগান আছে।","I have a garden."],["আমার একটি গাড়ী আছে।","I have a car."],["তার একটি প্রাসাদ আছে।","He has a palace."],["আমার একটি ঘড়ি আছে।","I have a watch."]]},{"n":3,"rule":"বাংলা বাক্যে অতীতকালে মুলক্রিয়া ছিল/ছিলে/ছিলাম উল্লেখ থাকলে Subject এর পরে was/were বসে।","structure":"Subject + was/were + object + ext.","s":[["তারা খুব গরীব ছিল।","They were very poor."],["সে আমার বন্ধু ছিল।","He was my friend."],["আমরা ধনী ছিলাম।","We were rich."],["তারা খুবই কর্মঠ ছিল।","They were very active."],["আমি বাড়িতে ছিলাম।","I was at home."],["তারা খুব ধনী ছিল।","They were very rich."],["আমি বোকা ছিলাম না।","I was not foolish."],["সে খুবই ভাল ছাত্র ছিল।","He was a very good student."],["তারা চালাক ছিল না।","They were not clever."],["তারা সুখি ছিল না।","They were not happy."]]},{"n":4,"rule":"বাংলা বাক্যে কারো কাছে কোন কিছু ছিল উল্লেখ থাকলে Subject এর পরে had বসে।","structure":"Subject + had + object + ext.","s":[["আমার একটি ঘড়ি ছিল।","I had a watch."],["লোকটির একজোড়া বলদ ছিল।","The man had one pair of bullocks."],["তার একটা সুন্দর বাড়ি ছিল।","He had a nice house."],["আমার একটা ছোট বাগান ছিল।","I had a small garden."],["তাদের অনেক জমি ছিল।","They had a lot of land."],["আমার অনেক বই ছিল।","I had many books."],["তার একটা গাড়ি ছিল।","He had a car."],["তাদের একটা বাড়ি ছিল।","They had a house."],["আমার একটা বাগান ছিল।","I had a garden."],["তার চারটা গরু ছিল।","He had four cows."]]},{"n":5,"rule":"বাংলা বাক্যে অতীতকালে অভ্যাসগত কাজ বুঝালে Subject এর পরে used to বসে। (অভ্যস্ত কথা থাকলে: Subject + be verb + verb-ing)","structure":"Subject + used to + verb + object + ext.   ","s":[["আমার মা প্রতিদিন কুরআন পড়তেন।","My mother used to read the Quran every day."],["তারা প্রতিদিন তাস খেলত।","They used to play cards."],["সে প্রায়ই মদ খাইত।","He often used to drink wine."],["লোকটি কঠোর পরিশ্রম করে অভ্যস্ত।","The man is used to doing hard work."],["আমি নদীতে সাঁতার কাটতে অভ্যস্ত।","I am used to swimming in the river."],["তার মা প্রতিদিন কুরআন পড়তেন।","His mother used to read the Quran every day."],["আমি প্রতিদিন নদীর তীরে বেড়াতে যেতাম।","I used to go for a walk by the river every day."],["তারা সব সময় খেলাধুলা করত।","They always used to play sports."]]},{"n":6,"rule":"বাংলা বাক্যে একই সাথে দুটি ক্রিয়া থাকলে, যে ক্রিয়ার শেষে \"তে\" আছে তার আগে to বসে।","structure":"Subject + verb + to + verb + object + ext.","s":[["আমি বই পড়তে ভালবাসি।","I love to read books."],["তারা নাচতে চায়।","They want to dance."],["সে গান গাইতে পছন্দ করে।","She likes to sing a song."],["তারা এ সম্পর্কে আলোচনা করতে চায়।","They want to discuss this matter."],["আমি সঠিকভাবে কাজ করতে ভালবাসি।","I love to work properly."],["সে বই পড়তে ভালবাসে।","He loves to read books."],["সে নাচতে চায়।","He wants to dance."],["আমি গান গাইতে পছন্দ করি।","I like to sing a song."],["আমি কাজ করতে ভালবাসি।","I love to work."],["তারা খেলতে চায়।","They want to play."]]},{"n":7,"rule":"বাংলা বাক্যে একই ক্রিয়া দুবার থাকলে, যে ক্রিয়া দুবার হয় তার পরে ing যোগ করতে হয় এবং ক্রিয়াটি সর্বশেষে বসে।","structure":"Subject + past + (verb + ing)","s":[["আমি যাইতে যাইতে দৃশ্যটি দেখলাম।","I saw the scenery going."],["শিশুটি কাঁদতে কাঁদতে তার মায়ের কাছে গেল।","The child went to his mother crying."],["সে হাসতে হাসতে চলে গেল।","She went away laughing."],["তিনি দৌড়াতে দৌড়াতে আমার কাছে আসলেন।","He came to me running."],["আমি হাঁপাতে হাঁপাতে বাড়িতে ছুটে এলাম।","I ran to my home panting."],["আমি আসতে আসতে দৃশ্যটি দেখলাম।","I saw the scenery coming."],["শিশুটি হাসতে হাসতে তার মায়ের কাছে গেল।","The child went to his mother laughing."],["সে কাঁদতে কাঁদতে চলে গেল।","She went away crying."],["তিনি হাঁটতে হাঁটতে আমার কাছে আসলেন।","He came to me walking."]]},{"n":8,"rule":"বাংলা বাক্যে \"যদিও-, তবুও-\" কথাটি উল্লেখ থাকলে বাক্যের প্রথমে বা মাঝখানে though/although বসে।","structure":"Though/although + sentence, opposite sentence.","s":[["যদিও সে গরীব, তবুও সে সৎ।","Though he is poor, he is honest."],["যদিও তারা কৃষক, তবুও ভদ্র।","Although they are farmers, they are gentle."],["যদিও সে অসুস্থ, তবুও স্কুলে গেল।","Though he was ill, he went to school."],["যদিও সে উচ্চশিক্ষিত, তবুও সে ভাল চাকরী পায় না।","Although he is highly educated, he can't get a good job."],["যদিও সে ধনী, তবুও সে অসৎ।","Though he is rich, he is dishonest."],["যদিও সে সুস্থ, তবুও স্কুলে গেল না।","Though he is healthy, he did not go to school."],["যদিও তারা শিক্ষিত, তবুও অভদ্র।","Although they are educated, they are rude."]]},{"n":9,"rule":"বাংলা বাক্যে \"তেও\" কথাটি উল্লেখ থাকলে too-to বসে।","structure":"Subject + am/is/are/was/were + too + adjective + to + verb.","s":[["শিশুটি হাঁটতেও দুর্বল।","The child is too weak to walk."],["অংকটি কষতেও কঠিন।","The sum is too difficult to solve."],["কাজটি করতেও সহজ।","The task is too easy to do."],["খাবারটি খেতেও মজা।","The food is too tasty to eat."],["কাজটি করতেও কঠিন ছিল।","The task was too difficult to do."],["কাজটি করতেও কঠিন।","The task is too difficult to do."],["অংকটি কষতেও সহজ।","The sum is too easy to solve."]]},{"n":10,"rule":"বাংলা বাক্যে \"শুধুই নয়, আরো\" কথাটি উল্লেখ থাকলে not only–but also ব্যবহৃত হয়।","structure":"Not only + sentence + but also + sentence.","s":[["রবীন্দ্রনাথ শুধুই একজন কবিই ছিলেন না, তিনি একজন দার্শনিকও ছিলেন।","Rabindranath was not only a poet but also a philosopher."],["শুধু বাংলাদেশই নয়, ভারতও একটি জনবহুল দেশ।","Not only Bangladesh but also India is a populated country."],["সে শুধু একজন ক্রিকেটারই নয়, সে একজন ফুটবলারও।","He is not only a cricketer but also a footballer."],["মাহেন্দ্র সিং ধনী একজন শুধু ক্রিকেটারই নয়, সে গোলরক্ষকও ছিল।","Mahendra Singh Dhoni was not only a cricketer but also a goalkeeper."],["মাদাম তোঁসো শুধু পদার্থে নোবেল পুরস্কারই পাননি, তিনি রসায়নেও নোবেল পুরস্কার পেয়েছিলেন।","Madam Thoso not only got the Nobel Prize in physics but also got the Nobel Prize in chemistry."]]},{"n":11,"rule":"উদ্দেশ্য মুলক বা জন্য উক্তি প্রকাশ করতে in order to ব্যবহৃত হয়।","structure":"In order to + sentence   বা   sentence + in order to.","s":[["আমরা জ্ঞানার্জনের উদ্দেশ্যে মসজিদে যাই।","We go to the mosque in order to acquire knowledge."],["মাছ ধরার উদ্দেশ্যে জেলেরা নদীতে যাচ্ছে।","The fishermen are going to the river in order to catch fish."],["শিক্ষার্জনের জন্য শিক্ষার্থীরা স্কুলে যাচ্ছে।","Students are going to school in order to achieve education."],["আমরা জ্ঞানার্জনের উদ্দেশ্যে বিশ্ববিদ্যালয়ে যাই।","In order to gather knowledge, we go to university."],["আমাদের সুস্বাস্থ্যের জন্য আমরা তাজা ফলমুল খাই।","In order to keep our health fit, we eat fresh fruits."]]},{"n":12,"rule":"বাংলা বাক্যে ভাবাই যায় না কথা উল্লেখ থাকলে let alone ব্যবহৃত হয়।","structure":"Let alone + (বাক্য / বাক্যাংশ)","s":[["আমরা এক মাইল হাঁটতে পারি না আবার পাঁচ মাইলের কথা ভাবাই যায় না।","We can't walk one mile, let alone five miles."],["আমি সাঁতার জানি না আবার সমুদ্রে যাওয়ার কথা ভাবাই যায় না।","I can't swim, let alone go to the sea."],["আমি ইংরেজি ভালোভাবে জানি না আবার বিদেশে পড়াশোনার কথা ভাবাই যায় না।","I don't know English well, let alone study abroad."],["আমি গিটার বাজাতে পারি না আবার বড় মঞ্চে বাজানোর কথা ভাবাই যায় না।","I can't play guitar, let alone perform on a big stage."],["আমি টাকা সঞ্চয় করতে পারি না আবার নিজের ব্যবসা শুরু করার কথা ভাবাই যায় না।","I can't save money, let alone start my own business."]]},{"n":13,"rule":"বাংলা বাক্যে কোন প্রস্তাবিত কথা থাকলে be verb এর পরে to + verb ব্যবহৃত হয়।","structure":"Subject + am/is/are/was/were + to + verb + object + ext.","s":[["আজ আমার ঢাকা যাওয়ার কথা।","I am to go to Dhaka today."],["আজ প্রধানমন্ত্রীর সংসদে ভাষণ দেওয়ার কথা।","The Prime Minister is to deliver a speech to parliament today."],["আজ এখানে তার কাজ করার কথা।","He is to work here today."],["আজ তাদের সেখানে উপস্থিত থাকার কথা।","They are to be present there today."],["আজ তার কক্সবাজার যাওয়ার কথা।","He is to go to Cox's Bazar today."],["আজ রাষ্ট্রপতির সংসদে ভাষণ দেওয়ার কথা।","The President is to deliver a speech to parliament today."],["আজ আমার কক্সবাজার যাওয়ার কথা।","I am to go to Cox's Bazar today."],["আজ তার ঢাকা যাওয়ার কথা।","He is to go to Dhaka today."]]},{"n":14,"rule":"বাংলা বাক্যে সত্ত্বেও বা না থাকা সত্ত্বেও কথাটি উল্লেখ থাকলে In spite of এবং Despite ব্যবহৃত হয়।","structure":"In spite of / Despite + noun/pronoun + verb-ing / having + object + ext.","s":[["সে অসুস্থ থাকা সত্ত্বেও স্কুলে গেল।","In spite of his being ill, he went to school."],["মেধা না থাকা সত্ত্বেও সে চাকরীটা পেল।","Despite his not having merit, he got the job."],["সে বৃষ্টির মধ্যে সত্ত্বেও স্কুলে গেল।","In spite of the rain, he went to school."],["দারিদ্র্য থাকা সত্ত্বেও সে পড়াশোনা চালিয়ে যায়।","In spite of poverty, he continues his study."],["কঠিন পরিস্থিতি থাকা সত্ত্বেও সে হাল ছাড়ে না।","In spite of the difficult situation, he does not give up."]]},{"n":15,"rule":"বাংলা বাক্যে কোথাও কোন কিছু আছে বুঝালে There is / There are ব্যবহৃত হয়।","structure":"There is / There are + noun + ext.","s":[["বাংলাদেশে ৭টি বিভাগ আছে।","There are seven divisions in Bangladesh."],["মেলান্দহে ১টি ঐতিহ্যবাহী মসজিদ আছে।","There is a traditional mosque in Melandah."],["ঢাকায় বহু কল-কারখানা আছে।","There are many mills and factories in Dhaka."],["এ দেশে ৬৪টি জেলা আছে।","There are sixty-four districts in our country."],["নদীতে অনেক মাছ আছে।","There are a lot of fish in the river."],["বগুড়ায় ১টি ঐতিহ্যবাহী স্টেডিয়াম আছে।","There is a traditional stadium in Bogura."]]},{"n":16,"rule":"যা দ্বারা প্রশ্ন করা হয় তাকে Interrogative Pronoun বলে। উহা মোট ১১টি: What (কি?), Who (কে?), Where (কোথায়?), How (কেমন/কিভাবে/কত?), Which (কোনটি?), Why (কেন?), Whom (কাকে?), Whose (কাদেরকে?), When (কখন?), How much (কতটুকু?), How many (কতগুলো?)। Auxiliary verb (am, is, are, was, were, been, can, could, will, would, may, might ইত্যাদি) বাক্যের প্রথমে বসিয়ে Yes/No Question করা হয়।","structure":"W.H. word + auxiliary verb + subject ...?   ","s":[["তুমি কে?","Who are you?"],["আমি মুহাম্মদ আনিছুর রহমান।","I am Md. Anisur Rahman."],["তুমি কি মুহাম্মদ আনিছুর রহমান?","Are you Md. Anisur Rahman?"],["হ্যাঁ, আমি।","Yes, I am."],["না, আমি আব্দুল্লাহ।","No, I am Abdullah."],["তোমার নাম কি?","What is your name?"],["সে কে?","Who is he?"],["তুমি কোথায় থাকো?","Where do you live?"],["তুমি কেমন আছ?","How are you?"],["তোমার কোনটি পছন্দ?","Which one do you like?"],["তুমি কেন কাঁদছ?","Why are you crying?"],["তুমি কাকে ভালোবাসো?","Whom do you love?"],["এটা কার কলম?","Whose pen is this?"],["তুমি কখন স্কুলে যাও?","When do you go to school?"],["এই বইটির দাম কতটুকু?","How much is this book?"],["তোমার কতগুলো বই আছে?","How many books do you have?"]]},{"n":17,"rule":"অতীতকালে কোথাও কোন কিছু ছিল বুঝালে There was / There were দ্বারা বাক্য শুরু হয়।","structure":"There was / There were + noun + ext.","s":[["বাংলাদেশে অনেক জ্ঞানী ব্যক্তি ছিল।","There were many wise men in Bangladesh."],["নদীতে অনেক মাছ ছিল।","There were a lot of fish in the river."],["বাংলাদেশ কৃষি বিশ্ববিদ্যালয়ের অধীনে একটি সংস্থা ছিল।","There was an organization under Bangladesh Agricultural University."],["আমাদের গ্রামে একটি প্রাথমিক বিদ্যালয় ছিল।","There was a primary school in our village."],["গত বছর এখানে একটি নতুন সেতু ছিল।","There was a new bridge here last year."],["কলেজে অনেক শিক্ষার্থী ছিল।","There were many students in the college."],["ভারতীয় উপমহাদেশে অনেক জ্ঞানী ব্যক্তি ছিল।","There were many wise men in the Indian subcontinent."],["নদীতে অনেক কুমির ছিল।","There were many crocodiles in the river."],["বাংলাদেশ কৃষি বিশ্ববিদ্যালয়ের অধীনে একটি ক্লাব ছিল।","There was a club under Bangladesh Agricultural University."],["আমাদের শহরে অনেক উঁচু ভবন ছিল।","There were many tall buildings in our city."],["২০০০ সালে এখানে একটি হাসপাতাল ছিল।","There was a hospital here in 2000."],["গতকাল এখানে অনেক মানুষ ছিল।","There were many people here yesterday."]]},{"n":18,"rule":"বাংলা বাক্যে \"মতো\" বা একটি বস্তুর সাথে অন্য বস্তুর সাদৃশ্য বুঝালে Adjective এর আগে ও পরে as বসে।","structure":"Subject + is/are/was/were + as + adjective + as + object + ext.","s":[["মেয়েটির চুল মেঘের মতো কালো।","The hair of the girl is as black as a cloud."],["এটি তুষারের মতো শুভ্র।","It is as white as ice."],["আশরাফের মনটা চাঁদের মতো কোমল।","The mind of Ashraf is as soft as the moon."],["ছেলেটির চেহারা তার বাবার মতো গম্ভীর।","The face of the boy is as serious as his father's."],["মেয়েটির চেহারা তার মায়ের মতো সুন্দর।","The face of the girl is as beautiful as her mother's."],["তাঁর মনটা সূর্যের মতো দীপ্ত।","His mind is as bright as the sun."]]},{"n":19,"rule":"বাংলা বাক্যে \"যাতে\" কথাটি উল্লেখ থাকলে So that ব্যবহার হয়।","structure":"Subject + verb + so that + clause / verb + object + ext.","s":[["তাড়াতাড়ি করো যাতে গাড়িটি ধরতে পারো।","Be fast so that you can catch the car."],["নিয়মিত ব্যায়াম করো যাতে সুস্থ্য থাক।","Take exercise regularly so that you keep fit."],["মনোযোগ দিয়ে পড়ো যাতে পরীক্ষায় পাস করতে পারো।","Read attentively so that you can pass the examination."],["আস্তে আস্তে হাঁট যাতে পিছলে না যাও।","Walk slowly so that you don't slip."],["তোমার কাজটা সেরে নাও যাতে আর সমস্যা না হয়।","Finish your work so that you don't face any more trouble."]]},{"n":20,"rule":"বাংলা বাক্যে যেহেতু সেহেতু কথাটি উল্লেখ থাকলে As/Since করতে হয়।","structure":"As/Since + clause + comma + main clause.","s":[["যেহেতু সে অসুস্থ, সেহেতু স্কুলে গেল না।","As he was ill, he didn't go to school."],["তারা খেলায় জয়লাভ করেছিল যেহেতু তারা ভাল খেলেছিল।","They won the game since they played well."],["যেহেতু বৃষ্টি হচ্ছিল, সেহেতু আমরা ঘরে ছিলাম।","As it was raining, we stayed at home."],["সে আগে থেকে প্রস্তুতি নিয়েছিল যেহেতু সে পরীক্ষায় ভাল করতে চেয়েছিল।","He had prepared beforehand since he wanted to do well in the exam."],["যেহেতু তুমি পরিশ্রম করবে, সেহেতু তুমি অবশ্যই সফল হবে।","As you will work hard, you will surely be successful."]]},{"n":21,"rule":"বাংলা বাক্যে আর বাদবাকি কথাটি উল্লেখ থাকলে and rest of the ব্যবহৃত হয়।","structure":"Subject + verb + and rest of the + noun.","s":[["মাঠে ২০টি প্রাণী আছে-এদের মধ্যে ৫টি ছাগল, ৪টি ঘোড়া আর বাদবাকিগুলো হলো গরু।","There are 20 animals in the field, among them five are goats, four are horses and rest of the cows."],["ক্লাসে ৩০ জন ছাত্র আছে-এদের মধ্যে ১০ জন মেয়ে, ১৫ জন ছেলে আর বাদবাকিগুলো হলো শিক্ষক।","There are 30 students in the class, among them 10 are girls, 15 are boys and rest of the teachers."],["বাগানে ১৫টি গাছ আছে-এদের মধ্যে ৫টি আম, ৪টি কাঁঠাল আর বাদবাকিগুলো হলো লিচু।","There are 15 trees in the garden, among them 5 are mangoes, 4 are jackfruits and rest of the litchis."],["লাইব্রেরিতে ৫০টি বই আছে-এদের মধ্যে ২০টি গল্পের, ১৫টি বিজ্ঞানের আর বাদবাকিগুলো হলো পাঠ্যবই।","There are 50 books in the library, among them 20 are story books, 15 are science books and rest of the textbooks."],["একটি দলে ১২ জন খেলোয়াড় আছে-এদের মধ্যে ৪ জন ফরোয়ার্ড, ৪ জন মিডফিল্ডার আর বাদবাকিগুলো হলো ডিফেন্ডার ও গোলকিপার।","There are 12 players in a team, among them 4 are forwards, 4 are midfielders and rest of the defenders and goalkeepers."]]},{"n":22,"rule":"বাংলা বাক্যে \"যেন\" কথাটি উল্লেখ থাকলে As if / As though ব্যবহৃত হয়।","structure":"Subject + verb + as if / as though + object + ext.","s":[["সে এমন ভাবে কথা বলে যেন সে পাগল।","He speaks as if he were mad."],["স্থাপনাটি দেখতে যেন তাজমহলের মতো সুন্দর।","The building looks wonderful as though it were the Taj Mahal."],["সে এমন ভাবে হাসে যেন সে সবই জানে।","He laughs as if he knows everything."],["বাতাসটি বইছে যেন গান গাইছে।","The wind is blowing as though it is singing."],["ছেলেটির চেহারা দেখে মনে হয় যেন সে কোন রাজকুমার।","The boy's appearance gives the impression as if he were a prince."],["সে এমন ভাবে কথা বলে যেন সে সবই জানে।","He speaks as if he knows everything."],["স্থাপনাটি দেখতে সুন্দর যেন এটি তাজমহল।","The building looks beautiful as though it were the Taj Mahal."]]},{"n":23,"rule":"বাংলা বাক্যে ইম্পেরেটিভ (আদেশমুলক) বাক্যে \"Till / Until\" ব্যবহারের বিশেষ নিয়ম।","structure":"Imperative sentence + till / until + object + ext.","s":[["আমি ফিরে আসা পর্যন্ত এ কাজটি করো।","Do this task till I come back."],["আমি ফিরে আসা না পর্যন্ত এ কাজটি করো।","Do this work until I come back."],["রাতের বৃষ্টি থামা পর্যন্ত বাইরে যেও না।","Don't go outside till the rain stops."],["বাস আসা পর্যন্ত স্ট্যান্ডে অপেক্ষা করো।","Wait at the stand until the bus comes."],["আল্লাহর উপর ভরসা রেখে তুমি সফল হও।","Keep faith in Allah till you succeed."],["বৃষ্টি থামা পর্যন্ত আমরা এখানে থাকব।","We will stay here until the rain stops."],["তুমি বৃষ্টি থামা পর্যন্ত এখানে থাকো।","Stay here until the rain stops."]]},{"n":24,"rule":"বাংলা বাক্যে \"যদি না\" কথাটি উল্লেখ থাকলে Unless ব্যবহার করতে হয়।","structure":"Unless + subject + verb + object + ext.","s":[["যদি না বৃষ্টি হয়, ফসল ভাল হবে না।","Unless it rains, the crops will not grow well."],["যদি না কঠোর পরিশ্রম করো, জীবনে সাফল্য অর্জন করতে পারবে না।","Unless you work hard, you can't shine in life."],["যদি না পড়ো, পাস করতে পারবে না।","Unless you study, you won't be able to pass."],["যদি না সেভিংস করো, ভবিষ্যতে সমস্যায় পড়বে।","Unless you save money, you will face problems in the future."],["যদি না নিয়ম মানো, তোমার ক্ষতি হতে পারে।","Unless you follow the rules, you may suffer loss."]]},{"n":25,"rule":"বাংলা বাক্যে \"কিভাবে / জানি কিভাবে\" কথা উল্লেখ থাকলে How to / Know how to ব্যবহার হয়।","structure":"How to / Know how to + verb + object + ext.","s":[["আমি জানি এটা কিভাবে করতে হয়।","I know how to do it."],["আমি জানি না কিভাবে এ কাজটি করতে হবে।","I don't know how to do this task."],["আমি জানি কিভাবে একটি ব্যাংক একাউন্ট খুলতে হয়।","I know how to open a bank account."],["আমি জানি কিভাবে একটি ইমেইল লিখতে হয়।","I know how to write an email."],["আমি জানি না কিভাবে কম্পিউটার ঠিক করতে হয়।","I don't know how to fix a computer."],["আমি জানি না কিভাবে এটা করতে হয়।","I don't know how to do it."],["আমি জানি কিভাবে এ কাজটি করতে হবে।","I know how to do this task."],["আমি জানি না কিভাবে একটি ব্যাংক একাউন্ট খুলতে হয়।","I don't know how to open a bank account."]]},{"n":26,"rule":"বাংলা বাক্যে \"এতই—যে\" কথাটি উল্লেখ থাকলে So—that ব্যবহার করা হয়। (so + adjective, that + negative sentence)","structure":"Subject + am/is/are + so + adjective + that + negative sentence.","s":[["ছেলেটি এতই দুর্বল যে সে হাঁটতে পারে না।","The boy is so weak that he can't walk."],["অংকটি এতই কঠিন যে সহজে কষা যায় না।","The sum is so difficult that it can't be solved easily."],["খাবারটা এতই বাসি যে খাওয়া যায় না।","The food is so stale that it can't be eaten."],["এতই গরম যে বাইরে থাকা যায় না।","It is so hot that we can't stay outside."],["বইটি এতই ভারী যে আমি বহন করতে পারি না।","The book is so heavy that I can't carry it."]]},{"n":27,"rule":"বাংলা বাক্যে \"এটাই উপযুক্ত সময়\" কথাটি উল্লেখ থাকলে বাক্যের শুরুতে It is high time বসে এবং পরে Past tense হয়।","structure":"It is high time + past tense.","s":[["এটাই উপযুক্ত সময় আমাদের বদ অভ্যাসগুলো ত্যাগ করার।","It is high time we gave up our bad habits."],["এটাই উপযুক্ত সময় আমাদের সমাজকে পরিবর্তন করার।","It is high time we changed our society."],["এটাই উপযুক্ত সময় আমাদের দেশটাকে গড়ার।","It is high time we built our country."],["এটাই উপযুক্ত সময় তাদের বেশি বেশি অধ্যয়ন করার।","It is high time they studied a lot."]]},{"n":28,"rule":"বাংলা বাক্যে \"আসা মাত্রই / যাওয়া মাত্রই\" কথা উল্লেখ থাকলে As soon as ব্যবহার হয়।","structure":"As soon as + past tense.","s":[["খেলা শেষ হওয়া মাত্রই সে সেখানে পৌঁছল।","As soon as the game ended, he reached there."],["বৃষ্টি শেষ হওয়া মাত্রই আমরা বাড়িতে আসলাম।","As soon as the rain stopped, we came home."],["তারা স্কুলে যাওয়া মাত্রই ঝড় শুরু হল।","As soon as they went to school, the storm started."],["খাওয়া শেষ হওয়া মাত্রই সে কাজে লেগে গেল।","As soon as he finished his meal, he went to work."],["আলো জ্বলা মাত্রই পড়তে শুরু করল।","As soon as the light turned on, she started to study."],["ট্রেন ছাড়ার মাত্রই সে হাত নেড়ে বিদায় জানাল।","As soon as the train left, he waved goodbye."]]},{"n":29,"rule":"বাংলা বাক্যে \"আসতে না আসতেই / যেতে না যেতেই\" কথা উল্লেখ থাকলে No sooner had—than বা Scarcely had—when বা Hardly had—when ব্যবহার হয়।","structure":"No sooner had + past + than + past.   ","s":[["সে সেখানে পৌছতে না পৌছতেই খেলা শেষ হয়ে গেল। (No sooner had — than ব্যবহার করো)","No sooner had he reached there than the game stopped."],["সে সেখানে পৌছতে না পৌছতেই খেলা শেষ হয়ে গেল। (Scarcely had — when ব্যবহার করো)","Scarcely had he reached there when the game stopped."],["সে সেখানে পৌছতে না পৌছতেই খেলা শেষ হয়ে গেল। (Hardly had — when ব্যবহার করো)","Hardly had he reached there when the game stopped."]]},{"n":30,"rule":"বাংলা বাক্যে \"কারণ বা তাই\" উল্লেখ থাকলে Because / Because of ব্যবহার করতে হয়।","structure":"Because / Because of + noun/pronoun + clause.","s":[["সে অসুস্থ তাই কাজ করতে পারে নি।","He couldn't do the work because he was ill."],["সে অসুস্থতার কারণে স্কুলে যেতে পারে নি।","Because of his illness, he couldn't go to school."]]},{"n":31,"rule":"বাংলা বাক্যে স্বীকৃতি বা সমর্থন জাতীয় প্রশ্নকে ইংরেজিতে Tag Question বলে। (Positive হলে Negative tag, Negative হলে Positive tag)","structure":"Statement + tag question?","s":[["পাখিরা উড়তে পারে, পারে নাকি?","Birds can fly, can't they?"],["বালকরা খেলা করে না, করে কি?","The boys do not play, do they?"],["সে কাঁদছে, তাই নয় কি?","He is crying, isn't he?"],["তুমি আগামীকাল আসবে, আসবে নাকি?","You will come tomorrow, won't you?"],["সে কিছুই পারে না, পারে কি?","He can't do anything, can he?"],["সে আগামীকাল আসবে, আসবে নাকি?","He will come tomorrow, won't he?"],["মাছ উড়তে পারে না, পারে কি?","Fish can't fly, can they?"]]},{"n":32,"rule":"যে সব word দ্বারা দুটি বাক্যের মধ্যে মিল সাধন করে তাকে Relative Pronoun বলে। তাছাড়া W.H Question গুলোও দুটি বাক্যের মধ্যে বসে মিল সাধন করে।","structure":"Relative pronoun (who, that, which, whom, whose) / W.H word (what, where, when, why, how)","s":[["যে লোকটি এসেছিল সে আমার ভাই ছিল।","The man who came was my brother."],["সে যা বলে তা সত্য।","What he says is true."],["আমি যাকে খুঁজি সে আমার প্রিয় বন্ধু।","He whom I seek is my best friend."]]},{"n":33,"rule":"বাংলা বাক্যে \"কাজ করো নইলে চরম ভুগতে হবে\" উল্লেখ থাকলে Lest ব্যবহৃত হয়।","structure":"Verb + adjective + lest + subject + should/might + ext.","s":[["মনোযোগ দিয়ে পড়ো নইলে পরীক্ষায় ফেল করবে।","Read attentively lest you should fail in the examination."],["দ্রুত হাঁট নইলে ক্লাস মিস করবে।","Walk quickly lest you should miss the class."],["টাকা ঠিকমতো জমাও নইলে ভবিষ্যতে কষ্ট পাবে।","Save your money lest you should face hardship in the future."],["সৎ পথে চল নইলে সমাজে সম্মান হারাবে।","Walk on the right path lest you should lose respect in society."],["সঠিক সময়ে কাজ শেষ করো নইলে বিপদে পড়বে।","Finish your work on time lest you should get into trouble."],["দ্রুত হাঁট নইলে ট্রেন মিস করবে।","Walk quickly lest you should miss the train."]]},{"n":34,"rule":"বাংলা বাক্যে \"কারো কাছে কোন কিছু আছে কি?\" বুঝালে subject এর পূর্বে Have / Has বসে। বাক্যটি প্রশ্নবোধক হয়।","structure":"Have / Has + subject + a/an + thing?","s":[["তোমার কি একটি কলম আছে?","Have you a pen?"],["তোমার কি পেনড্রাইভ আছে?","Have you a pendrive?"],["তার কি বাড়ি আছে?","Has he a house?"],["তোমার কি বই আছে?","Have you a book?"]]},{"n":35,"rule":"বাংলা বাক্যে দুটি কাজের উভয় কাজ করতে সক্ষম হলে Either—or কিন্তু অক্ষম হলে Neither—nor ব্যবহৃত হয়।","structure":"Either + verb + or + verb   ","s":[["সে হাসতেও পারে, কাঁদতেও পারে।","He can either laugh or cry."],["সে হাসতেও পারে না, কাঁদতেও পারে না।","He can neither laugh nor cry."],["তার হাতে টাকা আছে, তার কাছে বইও আছে।","He has either money or a book."]]},{"n":36,"rule":"বাংলা বাক্যে \"কোন কিছু দ্বারা কোন কিছু অর্জন\" কথা থাকলে By বাক্যের পূর্বে বসে, By পরে verb এর সাথে ing হয় এবং বাক্যটি হ্যাঁ বোধক হয়।","structure":"By + verb-ing + object + affirmative","s":[["কঠোর পরিশ্রম দ্বারা তুমি জীবনে সাফল্য অর্জন করতে পারবে।","By working hard, you can achieve success in life."],["কঠোর অধ্যয়ন দ্বারা তুমি পরীক্ষায় পাস করতে পারবে।","By studying hard, you can pass the examination."]]},{"n":37,"rule":"বাংলা বাক্যে \"কোন কিছু ছাড়া কোন কিছুর না অর্জন মুলক\" কথা থাকলে Without বাক্যের পূর্বে বসে, Without পরে verb এর সাথে ing হয় এবং বাক্যটি না বোধক হয়।","structure":"Without + verb-ing + object + negative","s":[["কঠোর পরিশ্রম ছাড়া তুমি জীবনে সাফল্য অর্জন করতে পারবে না।","Without working hard, you can't achieve success in life."],["কঠোর অধ্যয়ন ছাড়া তুমি পরীক্ষায় পাস করতে পারবে না।","Without studying hard, you can't pass the examination."]]},{"n":38,"rule":"বাংলা বাক্যে চলমান অবস্থায় \"যদি\" কথাটি এবং শর্ত উল্লেখ থাকলে If দিয়ে বাক্য শুরু করতে হয়। (১) If + simple present, present/future  (২) If + simple past, would + verb  (৩) If + past perfect, would have + past participle","structure":"If + simple present, will + verb   ","s":[["আমি যদি তার ঠিকানা খুঁজে পাই তাহলে আমি তাকে নিমন্ত্রণ করব।","If I find her address, I'll send her an invitation."],["আমি যদি তার ঠিকানা খুঁজে পেতাম তাহলে আমি তাকে নিমন্ত্রণ করতাম। (Simple Past)","If I found her address, I would send her an invitation."],["আমি যদি তার ঠিকানা খুঁজে পেতাম তাহলে আমি তাকে নিমন্ত্রণ করতাম। (Past Perfect)","If I had found her address, I would have sent her an invitation."]]},{"n":39,"rule":"বাংলা বাক্যে \"বরং\" কথাটি উল্লেখ থাকলে Would rather ব্যবহার হয়।","structure":"Would rather + verb (base form)","s":[["আমি বরং কফি খাব।","I would rather drink coffee."],["আমরা বরং কক্সবাজার ঘুরে আসি।","We would rather visit Cox's Bazar."],["আমি বরং সিনেমা দেখব।","I would rather watch a movie."],["আমি বরং আগে ঘুমাবো।","I would rather sleep early."],["আমরা বরং বাসে করে যাবো।","We would rather go by bus."]]},{"n":40,"rule":"বাংলা বাক্যে \"সামান্য আছে / অল্প কিছু আছে\" হলে A little / A few এবং \"নেই বললেই চলে\" হলে Little / Few ব্যবহৃত হয়।","structure":"A little / Little + uncountable noun   ","s":[["গ্লাসে সামান্য পানি আছে।","There is a little water in the glass."],["গ্লাসে পানি নেই বললেই চলে।","There is little water in the glass."],["তার অল্প কজন বন্ধু আছে।","He has a few friends."],["তার বন্ধু-বান্ধব নাই বললেই চলে।","He has few friends."]]},{"n":41,"rule":"বাংলা বাক্যে \"যতক্ষণ পর্যন্ত\" কথাটি উল্লেখ থাকলে As long as ব্যবহার হয়।","structure":"As long as + simple present, present/future","s":[["যতক্ষণ পর্যন্ত আপনি এখানে আছেন, আপনি সম্পূর্ণ নিরাপদ।","As long as you are here, you are safe."],["যতক্ষণ আপনি এ প্রতিষ্ঠানে আছেন, আপনি অন্য কোথাও কাজ করতে পারবেন না।","As long as you are in this institution, you can't work anywhere else."]]},{"n":42,"rule":"\"কারোর মতো কেউ কোন গুণের অধিকারী নয়\" হলে No other, \"কোন কিছুর মতো খুব কম গুণের অধিকারী আছে\" হলে Very few, আর \"কোন কিছুর মধ্যে কোন কিছু অন্যতম\" বুঝালে One of the ব্যবহৃত হয়।","structure":"No other + noun + verb + as + adjective + as ...   ","s":[["সাব্বিরের মতো কোন বালকই চালাক নয়।","No other boy is as clever as Sabbir."],["ঢাকার মতো ব্যস্ত খুব কম শহরই আছে।","Very few cities are as busy as Dhaka."],["ক্লাশের ছোট বালকদের মধ্যে রানা অন্যতম।","Rana is one of the smallest boys in the class."],["আধুনিক বিজ্ঞানের শ্রেষ্ঠ আবিষ্কারগুলোর মধ্যে টেলিভিশন অন্যতম।","Television is one of the best inventions of modern science."]]},{"n":43,"rule":"বাংলা বাক্যে যখন একটি কাজ আগে হয় এবং একটি কাজ পরে হয়, তখন যে কাজটি আগে হয় সেটির verb এর পরে ing বসে। অথবা Having / Having been ব্যবহৃত হয়।","structure":"Verb-ing + object, subject + verb + object   ","s":[["দরজা বন্ধ করে আমি বাইরে গেলাম।","Closing the door, I went outside."],["কাজ বন্ধ করে আমি কিছু খেলাম।","Stopping the task, I ate something."],["তাকে ভুলে আমি বাইরে গেলাম।","Having forgotten him, I went outside."],["চাকরিটা হারিয়ে লোকটি এখন দিশাহারা।","Having been dismissed from the job, the man is now at a loss."]]},{"n":44,"rule":"বাংলা বাক্যের শেষে \"তে হয়\" কথাটি উল্লেখ থাকলে Subject এর পরে am/is/are + to + V1 বসে।","structure":"Subject + am/is/are + to + verb (present) + object + ext.","s":[["আমাকে স্কুলে যেতে হয়।","I am to go to school."],["তাকে প্রতিদিন এক গ্লাস দুধ পান করতে হয়।","He is to drink a glass of milk every day."],["তোমাকে প্রতিদিন ব্যায়াম করতে হয়।","You are to take exercise every day."],["আমাকে ইংরেজি শিখতে হয়।","I am to learn English."],["আমাদেরকে দুর্নীতির বিরুদ্ধে রুখে দাঁড়াতে হয়।","We are to stand against corruption."],["একজন সচেতন নাগরিক হিসাবে আমাকে এটা মেনে চলতে হয়।","As a conscious citizen, I am to abide by it."],["আমাকে পিতামাতার দেখাশুনা করতে হয়।","I am to look after my parents."]]},{"n":45,"rule":"বাংলা বাক্যের শেষে \"তেই হয়\" কথাটি উল্লেখ থাকলে Subject এর পরে have/has + to + V1 বসে।","structure":"Subject + have/has + to + verb (present) + object + ext.","s":[["আনিছুরকে কাজ করতেই হয়।","Anisur has to work."],["আমাকে গাড়ি চালাতেই হয়।","I have to drive a car."],["তোমাকে প্রতি মাসে গ্রামে যেতেই হয়।","You have to go to the village every month."],["আমাদেরকে অসহায় মানুষের কথা ভাবতেই হয়।","We have to think about helpless people."]]},{"n":46,"rule":"বাংলা বাক্যের শেষে \"তেই হয়েছিল\" কথাটি উল্লেখ থাকলে Subject এর পরে had + to + V1 বসে।","structure":"Subject + had + to + verb (present) + object + ext.","s":[["আমাকে একটা গান গাইতেই হয়েছিল।","I had to sing a song."],["তাকে গতকাল মিটিং এ অংশগ্রহণ করতেই হয়েছিল।","He had to participate in the meeting yesterday."],["তোমাকে ইংরেজিতে বক্তব্য দিতেই হয়েছিল।","You had to deliver a speech in English."],["আমাদেরকে দুর্নীতির বিরুদ্ধে রুখে দাঁড়াতেই হয়েছিল।","We had to stand against corruption."]]},{"n":47,"rule":"বাংলা বাক্যের শেষে \"তে হইবে / তে হবে\" থাকলে Subject এর পরে shall / will + have to + principal verb (present form) বসে।","structure":"Subject + shall/will + have to + principal verb (present form) + object + ext.","s":[["তোমাকে বিপদে ধৈর্য রাখতে হইবে।","You will have to keep patience in danger."],["আমাকে কথা রাখতে হবে।","I shall have to keep my word."],["তোমাকে প্রতিষ্ঠিত হতে হলে অনেক সংগ্রাম করতে হবে।","You will have to struggle a lot to get established."],["আমাদেরকে নিজ দেশের কথা ভাবতে হবে।","We shall have to think about our own country."],["তোমাকে ডিজিটাল বাংলাদেশ গড়ার লক্ষ্যে অনেক অবদান রাখতে হবে।","You will have to contribute a lot with the aim of building Digital Bangladesh."],["আজ হোক বা কাল হোক আমাকে ইংরেজি শিখতে হবে।","Today or tomorrow, I shall have to learn English."],["যেকোন উপায়েই তাকে বিদেশ যেতে হবে।","He will have to go abroad by any means."],["জীবনে প্রতিষ্ঠিত হয়ে আমাকে গরীব লোকজনের পাশে দাঁড়াতে হবে।","After being established in life, I shall have to stand by the poor people."]]},{"n":48,"rule":"বাংলা বাক্যের শেষে \"তেই হইবে / তেই হবে\" থাকলে Subject এর পরে have / has + got to + principal verb (present form) বসে।","structure":"Subject + have/has + got to + principal verb (present form) + ext.","s":[["তোমাকে বিপদে ধৈর্য রাখতেই হইবে।","You will have got to keep patience in danger."],["আমাকে কথা রাখতেই হবে।","I shall have got to keep my word."],["তোমাকে প্রতিষ্ঠিত হতে হলে অনেক সংগ্রাম করতেই হবে।","You will have got to struggle a lot to get established."],["আমাদেরকে নিজ দেশের কথা ভাবতেই হবে।","We shall have got to think about our own country."],["তোমাকে ডিজিটাল বাংলাদেশ গড়ার লক্ষ্যে অনেক অবদান রাখতেই হবে।","You will have got to contribute a lot with the aim of building Digital Bangladesh."],["আজ হোক বা কাল হোক আমাকে ইংরেজি শিখতেই হবে।","Today or tomorrow, I shall have got to learn English."],["যেকোন উপায়েই তাকে বিদেশ যেতেই হবে।","He will have got to go abroad by any means."],["জীবনে প্রতিষ্ঠিত হয়ে আমাকে গরীব লোকজনের পাশে দাঁড়াতেই হবে।","After being established in life, I shall have got to stand by the poor people."]]},{"n":49,"rule":"বাংলা বাক্যে \"কি করলে কেমন হয়\" এমন কথা উল্লেখ থাকলে How about ব্যবহৃত হয়।","structure":"How about + verb-ing + object + extension?","s":[["আজ বিকেলে ক্রিকেট খেললে কেমন হয়?","How about playing cricket this afternoon?"],["আজ সন্ধ্যায় এখানে থাকলে কেমন হয়?","How about staying here this evening?"],["নতুন ব্যবসা শুরু করলে কেমন হয়?","How about starting a new business?"]]},{"n":50,"rule":"বাংলা বাক্যে \"কি হবে যদি\" কথা উল্লেখ থাকলে What if ব্যবহৃত হয়।","structure":"What if + subject + verb + object + extension?","s":[["কি হবে যদি আমি ধরা পরে যাই?","What if I get caught?"],["কি হবে যদি আমি আমার কাজ সময় মতো শেষ না করি?","What if I don't finish my work on time?"],["কি হবে যদি তারা থাকার সিদ্ধান্ত নেয়?","What if they decide to stay?"]]},{"n":51,"rule":"বাংলা বাক্যে \"আমি তোমাকে কোন কিছু করতে চাইনি\" এমন কথা উল্লেখ থাকলে I didn't mean to ব্যবহৃত হয়।","structure":"I didn't mean to + verb","s":[["আমি তোমার অনুভূতিতে আঘাত করতে চাইনি।","I didn't mean to hurt your feelings."],["আমি তোমাকে বিব্রত করতে চাইনি।","I didn't mean to embarrass you."],["আমি তোমাকে বিভ্রান্ত করতে চাইনি।","I didn't mean to confuse you."],["আমি তোমাকে ভয় দেখাতে চাইনি।","I didn't mean to scare you."]]},{"n":52,"rule":"বাংলা বাক্যের শেষে \"কথা আছে\" থাকলে Supposed to বসে।","structure":"Subject + am/is/are + supposed to + principal verb (present form) + ext.","s":[["আমার ইংরেজী শেখার কথা আছে।","I am supposed to learn English."],["ফিরোজের অরেঞ্জবিডিতে চাকরি পাওয়ার কথা আছে।","Firoz is supposed to get a job at orangebd."],["তার আজ প্রতিশোধ নেয়ার কথা আছে।","He is supposed to take revenge today."],["জামালের উচ্চ শিক্ষার জন্য বিদেশ যাওয়ার কথা আছে।","Jamal is supposed to go abroad for higher study."],["আমার এই সপ্তাহে গ্রামের বাড়ী যাওয়ার কথা আছে।","I am supposed to go to my village home this week."],["আমার নিজ গ্রামে একটি চক্ষু হাসপাতাল প্রতিষ্ঠা করার কথা আছে।","I am supposed to establish an eye hospital in my own village."],["তোমার মাকে নিয়ে আজ ডাক্তার দেখানোর কথা আছে।","Today you are supposed to visit a doctor with your mother."],["তার আজ প্রধান অতিথি হিসেবে বক্তব্য দেওয়ার কথা আছে।","Today he is supposed to deliver a speech as the chief guest."]]},{"n":53,"rule":"বাংলা বাক্যের শেষে \"কথা ছিল\" থাকলে was / were supposed to বসে।","structure":"Subject + was/were + supposed to + principal verb (present form) + ext.","s":[["আমার ইংরেজী শেখার কথা ছিল।","I was supposed to learn English."],["ফিরোজের অরেঞ্জবিডিতে চাকরি পাওয়ার কথা ছিল।","Firoz was supposed to get a job at orangebd."],["তোমার আজ নামাজ পড়ার কথা ছিল।","You were supposed to pray today."],["আমার শহীদ মিনারে যাওয়ার কথা ছিল।","I was supposed to go to Shaheed Minar."],["তার রক্ত দান করার কথা ছিল।","He was supposed to donate blood."],["আমার এই সপ্তাহে গ্রামের বাড়ী যাওয়ার কথা ছিল।","I was supposed to go to my village home this week."],["আমার নিজ গ্রামে একটি চক্ষু হাসপাতাল প্রতিষ্ঠা করার কথা ছিল।","I was supposed to establish an eye hospital in my own village."],["তোমার মাকে নিয়ে আজ ডাক্তার দেখানোর কথা ছিল।","Today you were supposed to visit a doctor with your mother."]]},{"n":54,"rule":"বাংলা বাক্যের শেষে \"সম্ভাবনা আছে\" থাকলে likely to বসে।","structure":"Subject + am/is/are + likely to + principal verb (present form) + ext.","s":[["আমার ইংরেজী শেখার সম্ভাবনা আছে।","I am likely to learn English."],["ফিরোজের এ+ পাওয়ার সম্ভাবনা আছে।","Firoz is likely to get an A+."],["তার আজ নামাজ পড়ার সম্ভাবনা আছে।","Today he is likely to pray."],["বৃষ্টি হওয়ার সম্ভাবনা আছে।","It is likely to rain."],["আমার বিদেশ যাওয়ার সম্ভাবনা আছে।","I am likely to go abroad."]]},{"n":55,"rule":"বাংলা বাক্যের শেষে \"সম্ভাবনা ছিল\" থাকলে was / were likely to বসে।","structure":"Subject + was/were + likely to + principal verb (present form) + ext.","s":[["আমার ইংরেজী শেখার সম্ভাবনা ছিল।","I was likely to learn English."],["ফিরোজের এ+ পাওয়ার সম্ভাবনা ছিল।","Firoz was likely to get an A+."],["তার আজ নামাজ পড়ার সম্ভাবনা ছিল।","Today he was likely to pray."],["বৃষ্টি হওয়ার সম্ভাবনা ছিল।","It was likely to rain."],["আমাদের বিদেশ যাওয়ার সম্ভাবনা ছিল।","We were likely to go abroad."]]}];
+const LABELS = ["am / is / are", "have / has", "was / were", "had", "used to", "to + verb", "verb + ing", "though / although", "too … to", "not only … but also", "in order to", "let alone", "be + to", "in spite of", "there is / are", "প্রশ্নবাচক শব্দ", "there was / were", "as … as", "so that", "as / since", "rest of the", "as if / as though", "till / until", "unless", "how to", "so … that", "it is high time", "as soon as", "no sooner had", "because (of)", "tag question", "relative pronoun", "lest", "have / has প্রশ্ন", "either … or", "by + verb-ing", "without + verb-ing", "if (conditional)", "would rather", "little / few", "as long as", "no other / one of the", "having + verb", "am / is / are to", "have / has to", "had to", "shall / will have to", "have got to", "how about", "what if", "didn't mean to", "supposed to", "was / were supposed to", "likely to", "was / were likely to"];
+
+/* ================= HELPERS ================= */
+const BND='০১২৩৪৫৬৭৮৯';
+const bn = n => String(n).replace(/\d/g,d=>BND[d]);
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function dayStr(off){const d=new Date();d.setDate(d.getDate()+off);return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
+
+/* ================= STORAGE ================= */
+const KEY='anis-sentence-lab-v1';
+let save={xp:0,done:{},streak:0,last:''};
+try{const s=localStorage.getItem(KEY);if(s)save=Object.assign(save,JSON.parse(s))}catch(e){}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(save))}catch(e){}}
+function shownStreak(){return (save.last===dayStr(0)||save.last===dayStr(-1))?save.streak:0}
+
+/* ================= HOME ================= */
+const OFF=[0,44,66,44,0,-44,-66,-44];
+const UNIT_CLASS=['u0','u1','u2','u3','u4'];
+const starSvg=(c,s)=>`<svg viewBox="0 0 24 24" style="color:${c}"><use href="#star"/></svg>`;
+
+function renderHome(){
+  $('#stXp').textContent=bn(save.xp);
+  $('#stStreak').textContent=bn(shownStreak());
+  const doneCount=RULES.filter(r=>save.done[r.n]).length;
+  $('#ruleCount').textContent=bn(RULES.length);
+  $('#overallBar').style.width=(doneCount/RULES.length*100)+'%';
+  $('#overallTxt').textContent=bn(doneCount)+'/'+bn(RULES.length)+' টি নিয়ম সম্পন্ন';
+  const path=$('#path');path.innerHTML='';
+  const cur=RULES.findIndex(r=>!save.done[r.n]);
+  RULES.forEach((r,i)=>{
+    if(i%5===0){
+      const end=Math.min(i+5,RULES.length);
+      const u=document.createElement('div');
+      u.className='unit '+UNIT_CLASS[(i/5)%UNIT_CLASS.length];
+      u.innerHTML=`<div><b>ইউনিট ${bn(i/5+1)}</b><span>নিয়ম ${bn(i+1)} – ${bn(end)}</span></div><em>${esc(LABELS[i])}</em>`;
+      path.appendChild(u);
+    }
+    const st=save.done[r.n];
+    const w=document.createElement('div');
+    w.className='node-wrap';
+    w.style.transform=`translateX(${OFF[i%OFF.length]}px)`;
+    let cls='node';if(st)cls+=' done';else if(i===cur)cls+=' cur';
+    const inner=st?`<svg viewBox="0 0 24 24" style="color:#fff"><use href="#star"/></svg>`:bn(r.n);
+    w.innerHTML=(i===cur?'<div class="start-tip">শুরু করো</div>':'')+
+      `<button class="${cls}" aria-label="নিয়ম ${r.n}: ${esc(LABELS[i])}" data-i="${i}">${inner}</button>`+
+      (st?`<div class="stars">${[1,2,3].map(k=>starSvg(k<=st?'#FFC800':'#D5DCEA')).join('')}</div>`:'')+
+      `<div class="node-label en">${esc(LABELS[i])}</div>`;
+    path.appendChild(w);
+  });
+  path.querySelectorAll('.node').forEach(b=>b.addEventListener('click',()=>openIntro(+b.dataset.i)));
+}
+
+/* ================= SHEETS ================= */
+function openSheet(html){$('#sheet').innerHTML=html;$('#sheetBd').classList.add('open')}
+function closeSheet(){$('#sheetBd').classList.remove('open')}
+$('#sheetBd').addEventListener('click',e=>{if(e.target.id==='sheetBd')closeSheet()});
+
+function ruleBlock(r){
+  return `<span class="tag">নিয়ম ${bn(r.n)}</span><h2>${esc(r.rule)}</h2><div class="structure">${esc(r.structure)}</div>`;
+}
+function openIntro(i){
+  const r=RULES[i];
+  const cnt=Math.min(10,r.s.length);
+  openSheet(ruleBlock(r)+`<div class="meta">${bn(cnt)}টি বাক্য সাজাতে হবে · ৫টি হার্ট</div>
+    <div class="row"><button class="btn primary block" id="goBtn">লেসন শুরু করো</button><button class="btn block" id="cancelBtn">পরে করব</button></div>`);
+  $('#goBtn').onclick=()=>{closeSheet();startLesson(i)};
+  $('#cancelBtn').onclick=closeSheet;
+}
+function openRuleOnly(r){
+  openSheet(ruleBlock(r)+`<div class="row"><button class="btn blue block" id="okBtn">বুঝেছি</button></div>`);
+  $('#okBtn').onclick=closeSheet;
+}
+
+/* ================= LESSON ================= */
+const CONFUSE={is:'are',are:'is',am:'is',was:'were',were:'was',has:'have',have:'has',had:'has',do:'does',does:'do',a:'an',an:'a',they:'we',we:'they'};
+const CHEERS=['দারুণ!','চমৎকার!','একদম ঠিক!','অসাধারণ!','দুর্দান্ত!'];
+let L=null;
+
+function buildItem(pair){
+  const [bnTxt,en]=pair;
+  const m=en.match(/[.?!]+$/);const end=m?m[0]:'';
+  const core=end?en.slice(0,-end.length):en;
+  const words=core.split(' ');
+  const clean=w=>w.toLowerCase().replace(/[^a-z']/g,'');
+  const present=new Set(words.map(clean));
+  const extra=[];
+  const maxExtra=words.length>=5?2:1;
+  for(const w of words){
+    const c=clean(w);
+    if(CONFUSE[c]&&!present.has(CONFUSE[c])&&!extra.includes(CONFUSE[c])&&extra.length<maxExtra&&words.length>=3){extra.push(CONFUSE[c])}
+  }
+  let tiles=words.map((w,i)=>({id:i,txt:w})).concat(extra.map((w,k)=>({id:words.length+k,txt:w})));
+  let order=shuffle(tiles),tries=0;
+  while(tries++<8&&order.slice(0,words.length).every((t,i)=>t.id===i)&&order.length===words.length)order=shuffle(tiles);
+  return {bn:bnTxt,en,end,words,target:words.join(' '),tiles:order,byId:Object.fromEntries(tiles.map(t=>[t.id,t]))};
+}
+
+function startLesson(i){
+  const r=RULES[i];
+  const pool=shuffle(r.s).slice(0,10);
+  L={i,rule:r,queue:pool.map(buildItem),idx:0,total:pool.length,done:0,hearts:5,lost:0,ans:[],state:'ask'};
+  const el=$('#lesson');el.classList.add('open');document.body.style.overflow='hidden';
+  renderLesson();
+}
+function closeLesson(){
+  $('#lesson').classList.remove('open');document.body.style.overflow='';L=null;renderHome();
+}
+function heartsHtml(){return `<div class="hearts" aria-label="হার্ট ${L.hearts}"><svg viewBox="0 0 24 24"><use href="#heart"/></svg>${bn(L.hearts)}</div>`}
+
+function renderLesson(){
+  const el=$('#lesson');
+  el.innerHTML=`
+    <div class="l-top">
+      <button class="x" id="xBtn" aria-label="বন্ধ করো">×</button>
+      <div class="bar"><i id="lBar" style="width:0%"></i></div>
+      <button class="hint-btn" id="hintBtn" aria-label="নিয়ম দেখো">💡</button>
+      <div id="heartsBox">${heartsHtml()}</div>
+    </div>
+    <div class="l-main"><div class="l-in" id="qBox"></div></div>
+    <div class="l-bottom" id="bottom"><div class="l-bot-in" id="botIn"></div></div>`;
+  $('#xBtn').onclick=confirmQuit;
+  $('#hintBtn').onclick=()=>openRuleOnly(L.rule);
+  renderQuestion();
+}
+function updateTop(){
+  $('#lBar').style.width=(L.done/L.total*100)+'%';
+  $('#heartsBox').innerHTML=heartsHtml();
+}
+function confirmQuit(){
+  openSheet(`<h2 class="center">এখন থামলে এই লেসনের অগ্রগতি হারিয়ে যাবে।</h2>
+    <div class="row"><button class="btn primary block" id="stayBtn">লেসন চালিয়ে যাও</button><button class="btn danger block" id="quitBtn">বন্ধ করো</button></div>`);
+  $('#stayBtn').onclick=closeSheet;
+  $('#quitBtn').onclick=()=>{closeSheet();closeLesson()};
+}
+
+function renderQuestion(){
+  const q=L.queue[L.idx];L.ans=[];L.state='ask';
+  updateTop();
+  $('#qBox').innerHTML=`
+    <h3>বাক্যটি ইংরেজিতে সাজাও</h3>
+    <div class="say"><svg class="mascot" viewBox="0 0 80 80" aria-hidden="true"><use href="#mascot"/></svg><div class="bubble">${esc(q.bn)}</div></div>
+    <div class="answer" id="answer"></div>
+    <div class="bank" id="bank"></div>`;
+  const b=$('#bottom');b.className='l-bottom';
+  $('#botIn').innerHTML=`<button class="btn primary solo" id="checkBtn" disabled>যাচাই করো</button>`;
+  $('#checkBtn').onclick=checkAnswer;
+  paint();
+}
+function paint(){
+  const q=L.queue[L.idx];
+  const a=$('#answer'),bank=$('#bank');
+  a.innerHTML='';bank.innerHTML='';
+  L.ans.forEach((id,pos)=>{
+    const t=document.createElement('button');t.className='tile';t.textContent=q.byId[id].txt;
+    t.onclick=()=>{if(L.state!=='ask')return;L.ans.splice(pos,1);paint()};
+    a.appendChild(t);
+  });
+  if(q.end&&L.ans.length===q.words.length){/* end mark shown after a full-length answer */
+    const m=document.createElement('span');m.className='end-mark';m.textContent=q.end;a.appendChild(m);
+  }
+  q.tiles.forEach(t=>{
+    const b=document.createElement('button');b.className='tile'+(L.ans.includes(t.id)?' ghost':'');b.textContent=t.txt;
+    b.onclick=()=>{if(L.state!=='ask'||L.ans.includes(t.id))return;L.ans.push(t.id);paint()};
+    bank.appendChild(b);
+  });
+  const cb=$('#checkBtn');if(cb)cb.disabled=L.ans.length===0;
+}
+
+function speak(text){
+  try{window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='en-US';u.rate=.9;window.speechSynthesis.speak(u)}catch(e){}
+}
+function checkAnswer(){
+  if(L.state!=='ask'||!L.ans.length)return;
+  const q=L.queue[L.idx];
+  const given=L.ans.map(id=>q.byId[id].txt).join(' ');
+  const ok=given===q.target;
+  L.state=ok?'ok':'bad';
+  const b=$('#bottom');b.className='l-bottom '+(ok?'ok':'bad');
+  $('#answer').classList.add(ok?'ok':'bad');
+  const full=q.en;
+  if(ok){
+    L.done++;
+    $('#botIn').innerHTML=`<div class="fb"><b>✔ ${CHEERS[Math.floor(Math.random()*CHEERS.length)]}</b><p>${esc(full)}</p></div>
+      <button class="spk" id="spkBtn" aria-label="উচ্চারণ শোনো"><svg viewBox="0 0 24 24"><use href="#spk"/></svg></button>
+      <button class="btn primary" id="nextBtn">এগিয়ে যাও</button>`;
+  }else{
+    L.hearts--;L.lost++;
+    L.queue.push(buildItem([q.bn,q.en]));
+    $('#botIn').innerHTML=`<div class="fb"><b>✖ ঠিক হয়নি</b><p><small>সঠিক উত্তর:</small>${esc(full)}</p></div>
+      <button class="spk" id="spkBtn" aria-label="উচ্চারণ শোনো"><svg viewBox="0 0 24 24"><use href="#spk"/></svg></button>
+      <button class="btn danger" id="nextBtn">${L.hearts<=0?'ঠিক আছে':'এগিয়ে যাও'}</button>`;
+  }
+  updateTop();
+  $('#spkBtn').onclick=()=>speak(full);
+  $('#nextBtn').onclick=nextQuestion;
+  $('#nextBtn').focus();
+}
+function nextQuestion(){
+  if(L.hearts<=0){return renderFail()}
+  if(L.done>=L.total||L.idx+1>=L.queue.length){return renderComplete()}
+  L.idx++;renderQuestion();
+}
+
+function renderFail(){
+  $('#lesson').innerHTML=`<div class="result">
+    <svg class="mascot" viewBox="0 0 80 80" aria-hidden="true" style="filter:grayscale(.4)"><use href="#mascot"/></svg>
+    <h2>হার্ট শেষ হয়ে গেছে</h2>
+    <p>চিন্তা নেই, নিয়মটা আরেকবার দেখে নতুন করে চেষ্টা করো।</p>
+    <div class="acts">
+      <button class="btn primary block" id="retryBtn">আবার চেষ্টা করো</button>
+      <button class="btn block" id="ruleBtn">নিয়মটি দেখো</button>
+      <button class="btn block" id="homeBtn">হোমে ফিরে যাও</button>
+    </div></div>`;
+  $('#retryBtn').onclick=()=>startLesson(L.i);
+  $('#ruleBtn').onclick=()=>openRuleOnly(L.rule);
+  $('#homeBtn').onclick=closeLesson;
+}
+function renderComplete(){
+  const stars=L.lost===0?3:(L.lost<=2?2:1);
+  const xp=L.total*2+(L.lost===0?5:0);
+  const acc=Math.round(L.total/(L.total+L.lost)*100);
+  const n=L.rule.n;
+  save.xp+=xp;
+  save.done[n]=Math.max(save.done[n]||0,stars);
+  if(save.last!==dayStr(0)){save.streak=(save.last===dayStr(-1))?save.streak+1:1;save.last=dayStr(0)}
+  persist();
+  const big=[1,2,3].map(k=>`<svg viewBox="0 0 24 24" style="color:${k<=stars?'#FFC800':'#D5DCEA'}"><use href="#star"/></svg>`).join('');
+  const next=RULES.findIndex(r=>r.n===n)+1;
+  const hasNext=next<RULES.length;
+  const i0=L.i;
+  $('#lesson').innerHTML=`<div class="result">
+    <svg class="mascot" viewBox="0 0 80 80" aria-hidden="true"><use href="#mascot"/></svg>
+    <h2>লেসন সম্পন্ন!</h2>
+    <p>নিয়ম ${bn(n)} · ${esc(LABELS[i0])}</p>
+    <div class="big-stars">${big}</div>
+    <div class="tiles3">
+      <div class="stat a"><i>মোট XP</i><span>${bn(xp)}</span></div>
+      <div class="stat b"><i>নির্ভুলতা</i><span>${bn(acc)}%</span></div>
+      <div class="stat c"><i>বাকি হার্ট</i><span>${bn(L.hearts)}</span></div>
+    </div>
+    <div class="acts">
+      ${hasNext?'<button class="btn primary block" id="nextRule">পরের নিয়ম</button>':''}
+      <button class="btn ${hasNext?'':'primary'} block" id="againBtn">আবার অনুশীলন করো</button>
+      <button class="btn block" id="homeBtn">হোমে ফিরে যাও</button>
+    </div></div>`;
+  if(hasNext)$('#nextRule').onclick=()=>startLesson(next);
+  $('#againBtn').onclick=()=>startLesson(i0);
+  $('#homeBtn').onclick=()=>{closeLesson();const c=document.querySelector('.node.cur');if(c)c.scrollIntoView({block:'center',behavior:'smooth'})};
+}
+
+/* keyboard: Enter = main button */
+document.addEventListener('keydown',e=>{
+  if(!L||e.key!=='Enter')return;
+  if($('#sheetBd').classList.contains('open'))return;
+  const n=$('#nextBtn');if(n){n.click();return}
+  const c=$('#checkBtn');if(c&&!c.disabled)c.click();
+});
+
+/* reset */
+$('#resetBtn').onclick=()=>{
+  openSheet(`<h2 class="center">সব অগ্রগতি মুছে ফেলবে?</h2>
+    <div class="row"><button class="btn block" id="noBtn">না, থাক</button><button class="btn danger block" id="yesBtn">হ্যাঁ, মুছে ফেলো</button></div>`);
+  $('#noBtn').onclick=closeSheet;
+  $('#yesBtn').onclick=()=>{save={xp:0,done:{},streak:0,last:''};persist();closeSheet();renderHome();window.scrollTo({top:0,behavior:'smooth'})};
+};
+
+renderHome();
+(function(){const c=document.querySelector('.node.cur');if(c&&Object.keys(save.done).length){setTimeout(()=>c.scrollIntoView({block:'center'}),60)}})();
+</script>
+</body>
+</html>
